@@ -57,6 +57,41 @@ import java.io.UnsupportedEncodingException;
 //それ以外のIOException
 //を別々に捕捉し、異なるエラー処理を行う
 
+//import java.nio.file.Files;
+//import java.nio.file.NoSuchFileException;
+//
+//public class Main {
+//	private static String readFile(File file, String encoding) {
+//		try {
+//			return new String(Files.readAllBytes(file.toPath()), encoding);
+//		} catch (NoSuchFileException e) {
+//			System.out.println("ファイルが見つかりませんでした： " + file);
+//			return "";
+//		} catch (UnsupportedEncodingException e) {
+//			System.out.println("エンコーディングが不正です： " + encoding);
+//			return "";
+//		} catch (IOException e) {
+//			System.out.println("ファイルの読み込みに失敗しました： " + file);
+//			return "";
+//		}
+//	}
+//	
+//	public static void main(String[] args) {
+//		System.out.println("テスト1: " + readFile(new File("file1.txt"), "utf-8"));
+//		System.out.println("テスト2: " + readFile(new File("file2.txt"), "utf-8"));
+//		System.out.println("テスト3: " + readFile(new File("file1.txt"), "unknown"));
+//	}
+//}
+//catch節は複数定義して異なるエラー処理を記述することが出来る
+//ただし、catchするExceptionクラスに継承関係がある場合はサブクラスの方を先に記述しなければならない
+//今回の場合、NoSuchFileException, UnsupportedEncodingExceptionの
+//いずれもIOExceptionを継承しているので、
+//OExceptionのcatch節はこれらのExceptionのcatch節よりも後に定義する必要がある
+
+
+//複数のExceptionのキャッチ(2)
+//実行するエラー処理が同じ場合は、複数のExceptionを|で区切って記述することで、
+//まとめてcatch節に含めることが出来る
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 
@@ -64,11 +99,8 @@ public class Main {
 	private static String readFile(File file, String encoding) {
 		try {
 			return new String(Files.readAllBytes(file.toPath()), encoding);
-		} catch (NoSuchFileException e) {
-			System.out.println("ファイルが見つかりませんでした： " + file);
-			return "";
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("エンコーディングが不正です： " + encoding);
+		} catch (NoSuchFileException | UnsupportedEncodingException e) {
+			System.out.println("ファイルが見つからないかエンコーディングが不正です。 ");
 			return "";
 		} catch (IOException e) {
 			System.out.println("ファイルの読み込みに失敗しました： " + file);
@@ -82,8 +114,3 @@ public class Main {
 		System.out.println("テスト3: " + readFile(new File("file1.txt"), "unknown"));
 	}
 }
-//catch節は複数定義して異なるエラー処理を記述することが出来る
-//ただし、catchするExceptionクラスに継承関係がある場合はサブクラスの方を先に記述しなければならない
-//今回の場合、NoSuchFileException, UnsupportedEncodingExceptionの
-//いずれもIOExceptionを継承しているので、
-//OExceptionのcatch節はこれらのExceptionのcatch節よりも後に定義する必要がある
