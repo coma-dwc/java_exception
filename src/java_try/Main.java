@@ -8,9 +8,7 @@ import java.io.UnsupportedEncodingException;
 
 public class Main {
 	private static String readFile(File file, String encoding) {
-		FileInputStream is = null;
-		try {
-			is = new FileInputStream(file);
+		try(FileInputStream is = new FileInputStream(file)) {
 			byte[] buf = new byte[(int)file.length()];
 			is.read(buf);
 			return new String(buf, encoding);
@@ -23,17 +21,6 @@ public class Main {
 		} catch (IOException e) {
 			System.out.println("ファイルの読み込みに失敗しました：" + file);
 			return "";
-		} finally {
-			if(is != null) {
-				try {
-					is.close();
-				} catch (IOException e2) {
-					//Ignore errors
-				}
-				System.out.println("FileInputStreamをクローズしました");
-			} else {
-				System.out.println("FileInputStreamは生成されていません");
-			}
 		}
 	}
 	
@@ -43,4 +30,3 @@ public class Main {
 		System.out.println("テスト3: " + readFile(new File("file1.txt"), "unknown"));
 	}
 }
-
