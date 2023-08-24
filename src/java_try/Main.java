@@ -1,8 +1,10 @@
 package java_try;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+
+//import java.io.File;
+//import java.io.IOException;
+//import java.io.UnsupportedEncodingException;
 
 //import java.io.File;
 //import java.io.IOException;
@@ -89,20 +91,46 @@ import java.io.UnsupportedEncodingException;
 //OExceptionのcatch節はこれらのExceptionのcatch節よりも後に定義する必要がある
 
 
-//複数のExceptionのキャッチ(2)
+//・複数のExceptionのキャッチ(2)
 //実行するエラー処理が同じ場合は、複数のExceptionを|で区切って記述することで、
 //まとめてcatch節に含めることが出来る
+//import java.nio.file.Files;
+//import java.nio.file.NoSuchFileException;
+//
+//public class Main {
+//	private static String readFile(File file, String encoding) {
+//		try {
+//			return new String(Files.readAllBytes(file.toPath()), encoding);
+//		} catch (NoSuchFileException | UnsupportedEncodingException e) {
+//			System.out.println("ファイルが見つからないかエンコーディングが不正です。 ");
+//			return "";
+//		} catch (IOException e) {
+//			System.out.println("ファイルの読み込みに失敗しました： " + file);
+//			return "";
+//		}
+//	}
+//	
+//	public static void main(String[] args) {
+//		System.out.println("テスト1: " + readFile(new File("file1.txt"), "utf-8"));
+//		System.out.println("テスト2: " + readFile(new File("file2.txt"), "utf-8"));
+//		System.out.println("テスト3: " + readFile(new File("file1.txt"), "unknown"));
+//	}
+//}
+
+
+//・[アンチパターン] Exceptionをまとめてキャッチ
+//catch節にException(またはさらに上位のスーパークラスであるThrowable)を指定することもできますが
+//これをやると意図しないバグによって発生したエラーもそこで補足されてしまい、
+//バグに気が付きにくくなります
+//catchする例外は対象範囲を明確にして使うように心がける
+
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 
 public class Main {
 	private static String readFile(File file, String encoding) {
 		try {
 			return new String(Files.readAllBytes(file.toPath()), encoding);
-		} catch (NoSuchFileException | UnsupportedEncodingException e) {
-			System.out.println("ファイルが見つからないかエンコーディングが不正です。 ");
-			return "";
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("ファイルの読み込みに失敗しました： " + file);
 			return "";
 		}
@@ -114,3 +142,4 @@ public class Main {
 		System.out.println("テスト3: " + readFile(new File("file1.txt"), "unknown"));
 	}
 }
+
