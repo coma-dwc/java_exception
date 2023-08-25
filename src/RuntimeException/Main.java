@@ -26,11 +26,23 @@ package RuntimeException;
 
 //・NullPointerException
 //変数strにnullを代入してNullPointerExceptionを発生させる
-public class Main {
-	public static void main(String[] args) {
-		String str = null;
-		System.out.println(str.toUpperCase());
-	}
-}
+//public class Main {
+//	public static void main(String[] args) {
+//		String str = null;
+//		System.out.println(str.toUpperCase());
+//	}
+//}
 //この例では変数strはString型なので、String型の持つメソッドtoUpperCase()を実行可能なはずですが、
 //値がnullだとメソッドの実行が出来ないためNullPointerExceptionとなる
+
+
+//・ArrayIndexOutOfBoundsException
+//3つの良い嘘を持つ配列変数arrayから4番目の要素(インデックス=3)にアクセスして
+//ArrayIndexOutOfBoundsExceptionを発生させる
+
+public class Main {
+	public static void main(String[] args) {
+		int[] array = new int[] { 5, 10, 15};
+		System.out.println(array[3]);
+	}
+}
