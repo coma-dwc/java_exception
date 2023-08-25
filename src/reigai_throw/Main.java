@@ -84,13 +84,30 @@ package reigai_throw;
 //整数除算のサンプルで先に0をチェックする代わりに、
 //0除算の例外をキャッチして、IllegalArgumentExceptionを投げなおす
 
+//public class Main {
+//	private static int divide(int a, int b) {
+//		try {
+//			return a / b;
+//		} catch (ArithmeticException e) {
+//		  throw new IllegalArgumentException("除数が0です", 0);
+//		}
+//	}
+//	
+//	public static void main(String[] args) {
+//		System.out.println("テスト1: " + divide(12, 4));
+//		System.out.println("テスト2: " + divide(12, 0));
+//		System.out.println("テスト3: " + divide(12, 2));
+//	}
+//}
+
+
+//・assert
+//IllegalArgumentExceptionの代わりにassertを使って例外をチェック
+
 public class Main {
 	private static int divide(int a, int b) {
-		try {
-			return a / b;
-		} catch (ArithmeticException e) {
-		  throw new IllegalArgumentException("除数が0です", 0);
-		}
+		assert b != 0;
+		return a / b;
 	}
 	
 	public static void main(String[] args) {
@@ -99,3 +116,9 @@ public class Main {
 		System.out.println("テスト3: " + divide(12, 2));
 	}
 }
+
+//assertはその時点でtrueとなるべき条件式を記述する構文
+//条件が満たされていない場合はAssertionErrorがthrowされる
+//ただし、assertがチェックされるのはjavaコマンド実行時に-eaオプションが指定された場合のみ
+//このオプションがない場合はassertの行は無いものとして扱われる
+//assertを使う場合、通常は開発中のみ-eaオプションを付ける
