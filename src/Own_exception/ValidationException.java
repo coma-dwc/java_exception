@@ -54,3 +54,4 @@ class PasswordException extends ValidationException {
 		super(message, cause);
 	}
 }
+
