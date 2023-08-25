@@ -28,6 +28,34 @@ package Own_exception;
 //validate()メソッドの中でユーザー名のバリデーションを実装
 //ここではExceptionが発生した場合はエラーメッセージを画面に表示してfalseを返すこと
 
+//public class Main {
+//	private static boolean validate(String username, String password) {
+//		try {
+//			if(username.length() > 40) {
+//				throw new UsernameException("ユーザー名が長すぎます");
+//			}
+//			if(username.indexOf(" ") != -1) {
+//				throw new UsernameException("ユーザー名にスペースが含まれています");
+//			}
+//			return true;
+//		} catch (ValidationException e) {
+//			System.out.println(e.getMessage());
+//			return false;
+//		}
+//	}
+//	
+//	public static void main(String[] args) {
+//		System.out.println("test1: " + validate("CODEPREP", "password"));  //OK
+//		System.out.println("test2: " + validate("CODEPREP1234567890123456789012345678901234567890", "password"));  //ユーザー名が長すぎる
+//		System.out.println("test3: " + validate("CODE PREP", "password"));  //ユーザー名にスペース
+//		System.out.println("test4: " + validate("CODEPREP", "pass"));  //パスワードが短すぎる
+//		System.out.println("test5: " + validate("CODEPREP", "password1234567890123456789012345678901234567890"));  //パスワードが長すぎる
+//		System.out.println("test6: " + validate("CODEPREP", "日本語パスワード"));  //パスワードにASCII以外の文字
+//	}
+//}
+
+
+//・パスワードのバリデーションの実装
 public class Main {
 	private static boolean validate(String username, String password) {
 		try {
@@ -36,6 +64,15 @@ public class Main {
 			}
 			if(username.indexOf(" ") != -1) {
 				throw new UsernameException("ユーザー名にスペースが含まれています");
+			}
+			if(password.length() < 6) {
+				throw new PasswordException("パスワードが短すぎます");
+			}
+			if(password.length() > 40) {
+				throw new PasswordException("パスワードが長すぎます");
+			}
+			if(!password.matches("^[\\x21-\\x7F]*$")) {
+				throw new PasswordException("パスワードに使用できない文字が含まれています");
 			}
 			return true;
 		} catch (ValidationException e) {
