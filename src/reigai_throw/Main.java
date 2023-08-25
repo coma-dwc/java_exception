@@ -41,33 +41,33 @@ package reigai_throw;
 //enum Statusを処理するswitch文のdefaul句で
 //IllegalStateException()をthrowするようにする
 
-enum Status {
-	NotStarted,
-	Processing,
-	Finished,
-}
-
-public class Main {
-	private static void printStatus(Status status) {
-		switch (status) {
-			case NotStarted:
-				System.out.println("まだ処理されていません");
-				break;
-			case Processing:
-				System.out.println("処理中です");
-				break;
-			case Finished:
-				System.out.println("処理済みです");
-				break;
-			default:
-				throw new IllegalStateException();
-		}
-	}
-	
-	public static void main(String[] args) {
-		printStatus(Status.Processing);
-	}
-}
+//enum Status {
+//	NotStarted,
+//	Processing,
+//	Finished,
+//}
+//
+//public class Main {
+//	private static void printStatus(Status status) {
+//		switch (status) {
+//			case NotStarted:
+//				System.out.println("まだ処理されていません");
+//				break;
+//			case Processing:
+//				System.out.println("処理中です");
+//				break;
+//			case Finished:
+//				System.out.println("処理済みです");
+//				break;
+//			default:
+//				throw new IllegalStateException();
+//		}
+//	}
+//	
+//	public static void main(String[] args) {
+//		printStatus(Status.Processing);
+//	}
+//}
 
 //IllegalStateExceptionはありえない状態が発生したことを示す例外です
 //このサンプルでは最後のdefault節がなくても問題なく実行できる
@@ -77,3 +77,25 @@ public class Main {
 //default節にIllegalStateExceptionを仕込んでおけば、実行時にエラーが発生するのでそこで修正が必要なことに気がつく
 //プログラムの作成ではswitchやifでの条件分岐がつきものですが、到達するはずがないコードブロックがある場合は
 //そこでIllegalStateExceptionを投げるようにする
+
+
+
+//・例外のrethrow
+//整数除算のサンプルで先に0をチェックする代わりに、
+//0除算の例外をキャッチして、IllegalArgumentExceptionを投げなおす
+
+public class Main {
+	private static int divide(int a, int b) {
+		try {
+			return a / b;
+		} catch (ArithmeticException e) {
+		  throw new IllegalArgumentException("除数が0です", 0);
+		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("テスト1: " + divide(12, 4));
+		System.out.println("テスト2: " + divide(12, 0));
+		System.out.println("テスト3: " + divide(12, 2));
+	}
+}
