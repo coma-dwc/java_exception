@@ -30,14 +30,44 @@ import java.nio.file.Files;
 
 //readFile()メソッドにthrowsIOExceptionを宣言してIOExceptionが発生する可能性があることを示す
 
+//public class Main {
+//	private static String readFile(File file, String encoding) throws IOException {
+//		return new String(Files.readAllBytes(file.toPath()), encoding);
+//	}
+//	
+//	public static void main(String[] args) {
+//		System.out.println("テスト1: " + readFile(new File("file1.txt"), "utf-8"));
+//		System.out.println("テスト2: " + readFile(new File("file2.txt"), "utf-8"));
+//		System.out.println("テスト3: " + readFile(new File("file1.txt"), "unknown"));
+//	}
+//}
+//結果：エラー
+
+//・呼び出し側で例外を処理する
+//readFileメソッドで検査例外であるIOExceptionを投げる可能性が示唆されましたが、
+//それが処理されていないため先のコードはまだコンパイルエラーとなる
+//この場合、呼び出し側でtry～catchを使用して例外を処理する必要がある
+
 public class Main {
 	private static String readFile(File file, String encoding) throws IOException {
 		return new String(Files.readAllBytes(file.toPath()), encoding);
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("テスト1: " + readFile(new File("file1.txt"), "utf-8"));
-		System.out.println("テスト2: " + readFile(new File("file2.txt"), "utf-8"));
-		System.out.println("テスト3: " + readFile(new File("file1.txt"), "unknown"));
+		try {
+			System.out.println("テスト1: " + readFile(new File("file1.txt"), "utf-8"));
+		} catch (IOException e) {
+			System.out.println("ファイルの読み込みに失敗しました");
+		}
+		try {
+			System.out.println("テスト2: " + readFile(new File("file2.txt"), "utf-8"));
+		} catch (IOException e) {
+			System.out.println("ファイルの読み込みに失敗しました");
+		}
+		try {
+			System.out.println("テスト3: " + readFile(new File("file1.txt"), "unknown"));
+		} catch (IOException e) {
+			System.out.println("ファイルの読み込みに失敗しました");
+		}
 	}
 }
